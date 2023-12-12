@@ -4,6 +4,8 @@ const path = require('path')
 
 //Inicializamos
 const app = express()
+// Importar el metodo override
+const methodOverride = require('method-override');
 
 //Configuraciones
 app.set('port',process.env.port || 3000)
@@ -31,14 +33,16 @@ app.set('view engine','.hbs')
 //Middlewars
 //servidor va a trrabjar con la informacion en base a formularios0
 app.use(express.urlencoded({extended:false}))
+app.use(methodOverride('_method'))
 
 
-//RUTAS
-app.use(require('./routers/index.routes'))
 //Primera ruta
 
 //Archivos estaticos
 //Definir archivo estaticos y publicos
+app.use(require('./routers/portafolio.routes'))
+app.use(require('./routers/index.routes'))
+
 app.use(express.static(path.join(__dirname,'public')))
 
 module.exports = app
